@@ -22,7 +22,7 @@ CUSTOM_CSS = """
         }
         
         [data-testid="stTabs"] [role="tablist"] button {
-            font-size: 1.2rem !important;
+            font-size: 2.75rem !important;
             padding: 1rem 2rem !important;
             font-weight: bold !important;
             color: #e0e0e0 !important;
