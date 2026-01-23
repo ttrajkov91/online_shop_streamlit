@@ -1,0 +1,21 @@
+id,title,author,category,price,rating,description,year_published
+1,Dune,Frank Herbert,Sci-Fi,18.99,4.8,An epic space opera about politics, religion, and ecology on a desert planet.,1965
+2,The Count of Monte Cristo,Alexandre Dumas,Historical,14.99,4.7,A tale of betrayal, imprisonment, and revenge set in 19th century France.,1844
+3,Pride and Prejudice,Jane Austen,Romance,12.99,4.9,A witty romance novel about social class and first impressions in Regency England.,1813
+4,Hamlet,William Shakespeare,Drama,11.99,4.6,A tragic drama about a prince seeking revenge for his father's murder.,1603
+5,Neuromancer,William Gibson,Sci-Fi,16.99,4.7,A cyberpunk masterpiece that pioneered the cyberpunk genre.,1984
+6,The Great Gatsby,F. Scott Fitzgerald,Drama,13.99,4.8,A modernist novel about wealth, love, and the American Dream in the Jazz Age.,1925
+7,Outlander,Diana Gabaldon,Romance,17.99,4.7,An epic romance spanning time travel and Scottish history.,1991
+8,All the Light We Cannot See,Anthony Doerr,Historical,15.99,4.8,A WWII novel about a blind French girl and a German boy.,2014
+9,The Martian,Andy Weir,Sci-Fi,14.99,4.8,An astronaut must use ingenuity to survive on Mars.,2011
+10,Jane Eyre,Charlotte Brontë,Romance,13.99,4.7,A Gothic romance about an orphaned governess and her mysterious employer.,1847
+11,The Book Thief,Markus Zusak,Historical,15.99,4.9,Set in Nazi Germany, narrated by Death, about a girl who steals books.,2005
+12,Foundation,Isaac Asimov,Sci-Fi,16.99,4.7,A series spanning a galactic empire and psychohistory.,1951
+13,The Phantom of the Opera,Gaston Leroux,Drama,14.99,4.6,A Gothic drama about music, obsession, and love in the Paris Opera.,1909
+14,Sense and Sensibility,Jane Austen,Romance,12.99,4.6,A romance exploring the contrast between sense and emotion.,1811
+15,A Brief History of Time,Stephen Hawking,Sci-Fi,17.99,4.7,An exploration of black holes, time, and the universe.,1988
+16,Les Misérables,Victor Hugo,Historical,19.99,4.8,An epic set during the French Revolution about redemption and justice.,1862
+17,Rebecca,Daphne du Maurier,Drama,14.99,4.7,A psychological thriller about a mysterious first wife's legacy.,1938
+18,Wuthering Heights,Emily Brontë,Romance,13.99,4.5,A dark, passionate romance set on the Yorkshire moors.,1847
+19,The Left Hand of Darkness,Ursula K. Le Guin,Sci-Fi,16.99,4.8,A groundbreaking sci-fi exploring gender and society on an alien world.,1969
+20,I, Claudius,Robert Graves,Historical,16.99,4.7,Ancient Rome seen through the memoirs of Emperor Claudius.,1934
