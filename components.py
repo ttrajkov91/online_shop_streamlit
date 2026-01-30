@@ -124,6 +124,75 @@ def render_featured_card(book):
     """
     st.markdown(featured_html, unsafe_allow_html=True)
 
+def render_featured_carousel(featured_books, carousel_key="featured_carousel"):
+    """Render a sophisticated slideshow carousel with fade effect and synchronized navigation"""
+    import time
+    
+    if not featured_books:
+        return None
+    
+    # Initialize session state for carousel
+    if f"{carousel_key}_index" not in st.session_state:
+        st.session_state[f"{carousel_key}_index"] = 0
+    if f"{carousel_key}_last_update" not in st.session_state:
+        st.session_state[f"{carousel_key}_last_update"] = time.time()
+    
+    # Auto-advance every 3 seconds
+    current_time = time.time()
+    if current_time - st.session_state[f"{carousel_key}_last_update"] > 3:
+        st.session_state[f"{carousel_key}_index"] = (st.session_state[f"{carousel_key}_index"] + 1) % len(featured_books)
+        st.session_state[f"{carousel_key}_last_update"] = current_time
+        st.rerun()
+    
+    st.markdown("#### 🌟 Top Featured Picks")
+    
+    current_book = featured_books[st.session_state[f"{carousel_key}_index"]]
+    current_position = st.session_state[f"{carousel_key}_index"] + 1
+    
+    # Create carousel HTML for current book
+    carousel_html = f"""
+    <div class="carousel-main-wrapper slider-1">
+        <div class="carousel-fade-container">
+            <div class="carousel-container-image">
+                <div class="carousel-slide-wrapper" style="cursor: pointer;">
+                    <div class="carousel-card">
+                        <div class="carousel-badge">#{current_position} of {len(featured_books)} • TOP PICK</div>
+                        <div class="carousel-book-image">{current_book['image']}</div>
+                        <div class="carousel-book-title">{current_book['title']}</div>
+                        <div class="carousel-book-author">by {current_book['author']}</div>
+                        <div class="carousel-book-category">{current_book['category']}</div>
+                        <div class="carousel-book-description">{current_book['description'][:200]}...</div>
+                        <div class="carousel-book-rating">⭐ {current_book['rating']}/5.0 • {current_book.get('ratings_count', 0):,} reviews</div>
+                        <div class="carousel-book-price">${current_book['price']:.2f}</div>
+                    </div>
+                </div>
+                <div class="carousel-arrow carousel-arrow-left"></div>
+                <div class="carousel-arrow carousel-arrow-right"></div>
+            </div>
+        </div>
+    </div>
+    """
+    
+    st.markdown(carousel_html, unsafe_allow_html=True)
+    
+    # Navigation dots (visual indicators only)
+    dots_html = '<div class="carousel-nav-wrapper slider-2"><div class="carousel-indicators">'
+    for i in range(len(featured_books)):
+        active_class = "active" if i == st.session_state[f"{carousel_key}_index"] else ""
+        dots_html += f'<span class="carousel-dot {active_class}" style="cursor: pointer;"></span>'
+    dots_html += '</div></div>'
+    
+    st.markdown(dots_html, unsafe_allow_html=True)
+    
+    # Auto-advance carousel using Streamlit's rerun
+    time.sleep(0.1)
+    if current_time - st.session_state[f"{carousel_key}_last_update"] >= 3.0:
+        st.session_state[f"{carousel_key}_index"] = (st.session_state[f"{carousel_key}_index"] + 1) % len(featured_books)
+        st.session_state[f"{carousel_key}_last_update"] = time.time()
+        st.rerun()
+    
+    return current_book
+
 def render_no_results(category=None):
     """Render no results message"""
     message = f"😔 No books found in {category}. Try selecting a different category!" if category else "😔 No books found. Try adjusting your filters!"

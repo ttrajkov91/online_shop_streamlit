@@ -61,7 +61,7 @@ if st.session_state.show_search:
     )
 
 # Tabs (not inside columns)
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["🏪 Shop", "📚 Categories", "⭐ Featured", "📖 About Us", "💬 Contact", "❓ Help"])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["🏪 Shop", "📚 Categories", "⭐ Featured", "🎪 Event", "📖 About Us", "💬 Contact", "❓ Help"])
 
 # Function to display book details modal
 def display_book_details(book, key_prefix=""):
@@ -253,6 +253,29 @@ with tab1:
     st.session_state.last_active_tab = 'shop'
     
     st.markdown("### 🏪 Browse Our Collection")
+
+    # Highlight top featured books with a sophisticated carousel
+    top_featured = sorted(BOOKS_CATALOG, key=lambda x: x['rating'], reverse=True)[:5]
+    selected_featured = render_featured_carousel(top_featured, carousel_key="shop_featured_carousel")
+
+    if selected_featured:
+        feat_action_cols = st.columns(3)
+        with feat_action_cols[0]:
+            if st.button("👁️ Quick Preview", key=f"slider_preview_{selected_featured['id']}", use_container_width=True):
+                st.session_state.show_preview = True
+                st.session_state.preview_book = selected_featured
+                st.rerun()
+        with feat_action_cols[1]:
+            if st.button("🛒 Add to Cart", key=f"slider_cart_{selected_featured['id']}", use_container_width=True):
+                st.session_state.cart.append(selected_featured)
+                st.success("Added to cart!", icon="✅")
+        with feat_action_cols[2]:
+            if st.button("❤️ Add to Wishlist", key=f"slider_wish_{selected_featured['id']}", use_container_width=True):
+                if selected_featured not in st.session_state.wishlist:
+                    st.session_state.wishlist.append(selected_featured)
+                    st.success("Added to wishlist!", icon="💝")
+
+    st.markdown("---")
     
     # Filter books based on criteria
     filtered_books = BOOKS_CATALOG.copy()
@@ -732,8 +755,136 @@ with tab3:
                         st.session_state.wishlist.append(book)
                         st.success(f"Added to wishlist!", icon="💝")
 
-# TAB 4: ABOUT US
+# TAB 4: EVENT
 with tab4:
+    # Reset book details when entering this tab
+    if st.session_state.last_active_tab != 'event':
+        st.session_state.show_book_details = False
+        st.session_state.selected_book = None
+        st.session_state.last_active_tab = 'event'
+    
+    # Event banner
+    st.markdown("### 🎪 BookVibe Expo 2026")
+    try:
+        st.image("eventdefaultbanner.png", use_column_width=True)
+    except:
+        st.markdown("""
+            <div class="info-box" style="text-align: center; padding: 2rem; font-size: 4rem;">
+                📷 Event Banner
+            </div>
+        """, unsafe_allow_html=True)
+    
+    # Event description
+    st.markdown("""
+        <div class="info-box">
+            <div class="info-title">✨ The Ultimate Literary Experience</div>
+            <p>
+            Join us for BookVibe Expo 2026, the year's most anticipated gathering of book lovers, authors, and literary enthusiasts!
+            Celebrate the magic of reading with exclusive author meet-and-greets, interactive workshops, and amazing deals on thousands of titles.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Event details
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("""
+            <div class="info-box">
+                <div class="info-title">📅 When</div>
+                <p><strong>June 15-17, 2026</strong><br>Friday - Sunday<br>9 AM - 6 PM</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+            <div class="info-box">
+                <div class="info-title">📍 Where</div>
+                <p><strong>Convention Center</strong><br>Downtown District<br>New York, NY 10001</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+            <div class="info-box">
+                <div class="info-title">🎟️ Tickets</div>
+                <p><strong>From $25</strong><br>Early Bird: $15<br>VIP Pass: $75</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    # Video section
+    st.markdown("""
+        <div class="info-box">
+            <div class="info-title">🎬 Event Highlights Video</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.video("https://www.youtube.com/watch?v=y8Zu3Im9vOA")
+    
+    # Event features
+    st.markdown("#### 🌟 What to Expect")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        **🎤 Author Signings & Meet-and-Greets**
+        
+        Meet your favorite authors and get personalized book signings from bestselling writers across all genres.
+        """)
+        
+        st.markdown("""
+        **📚 Interactive Workshops**
+        
+        Attend workshops on creative writing, book club leadership, and literary criticism led by industry experts.
+        """)
+        
+        st.markdown("""
+        **🏆 Literary Awards Ceremony**
+        
+        Witness the announcement of the 2026 BookVibe Literary Awards celebrating exceptional works of fiction and non-fiction.
+        """)
+    
+    with col2:
+        st.markdown("""
+        **🛍️ Exclusive Book Deals**
+        
+        Enjoy up to 50% off on select titles, exclusive collector's editions, and limited merchandise available only at the expo.
+        """)
+        
+        st.markdown("""
+        **👥 Community Events**
+        
+        Network with fellow book enthusiasts, join book club discussions, and participate in reading challenges.
+        """)
+        
+        st.markdown("""
+        **🍽️ Author Dinners & Receptions**
+        
+        Exclusive evening events where you can dine and mingle with celebrated authors in an intimate setting.
+        """)
+    
+    # Call to action
+    st.markdown("""
+        <div class="info-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); text-align: center;">
+            <div class="info-title" style="color: white;">Ready to Join Us?</div>
+            <p style="color: white; font-size: 1.1rem; margin-top: 1rem;">
+            Get your tickets early and don't miss out on the literary event of the year!<br>
+            <strong>Limited Early Bird tickets available at just $15</strong>
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col_ticket, col_info = st.columns(2)
+    with col_ticket:
+        if st.button("🎟️ Get Tickets Now", use_container_width=True, key="buy_tickets"):
+            st.info("🎉 Tickets can be purchased through our partner ticketing platform. Visit bookvibe-expo-2026.com to secure your spot!")
+    
+    with col_info:
+        if st.button("📬 Get Event Updates", use_container_width=True, key="event_updates"):
+            st.success("✅ You'll receive event updates, speaker announcements, and special offers to your email!")
+
+# TAB 5: ABOUT US
+with tab5:
     # Reset book details when entering this tab
     if st.session_state.last_active_tab != 'about':
         st.session_state.show_book_details = False
@@ -782,7 +933,7 @@ with tab4:
     with col3:
         st.metric("⭐ Rating", "4.8/5.0")
 
-# TAB 5: CONTACT
+# TAB 6: CONTACT
 with tab5:
     # Reset book details when entering this tab
     if st.session_state.last_active_tab != 'contact':
@@ -843,8 +994,8 @@ with tab5:
             </div>
         """, unsafe_allow_html=True)
 
-# TAB 6: HELP & FAQ
-with tab6:
+# TAB 7: HELP & FAQ
+with tab7:
     # Reset book details when entering this tab
     if st.session_state.last_active_tab != 'help':
         st.session_state.show_book_details = False
